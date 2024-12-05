@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    @font-face {
+        font-family: "interBold";
+        src: url(/public/fonts/Inter-Bold.ttf), format("truetype");
+    }
+    @font-face {
+        font-family: "vazirLight";
+        src: url(/public/fonts/Vazir-Light.ttf), format("truetype");
+    }
+    @font-face {
+        font-family: "vazir";
+        src: url(/public/fonts/Vazir.ttf), format("truetype");
+    }
+    @font-face {
+        font-family: "vazirBold";
+        src: url(/public/fonts/Vazir-Bold.ttf), format("truetype");
+    }
+}
+
+@layer utilities{
+    .is-invalid{
+        @apply border-red-500
+    }
+}
