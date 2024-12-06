@@ -2,15 +2,15 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Note
 from .serializers import NoteSerializer
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import NoteSerializer
 from django.contrib.auth.models import User
 
 
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
 from rest_framework.authtoken.models import Token
@@ -66,7 +66,7 @@ def note_detail(request, id, format=None):
 #     serializer = NoteSerializer(notes, many=True)
 #     return Response(serializer.data)
 
-from rest_framework.decorators import authentication_classes, permission_classes
+# from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 
 @api_view(['GET'])
@@ -104,7 +104,8 @@ def note_detail(request, pk):
 
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])  # اطمینان از این که کاربر لاگین شده باشد
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])  # اطمینان از این که کاربر لاگین شده باشد
 def add_note(request):
     serializer = NoteSerializer(data=request.data)
     if serializer.is_valid():
@@ -114,4 +115,18 @@ def add_note(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])  # اطمینان از این که کاربر لاگین شده باشد
+def delete_note(request):
+    serializer = NoteSerializer(data=request.data)
+    if serializer.is_valid():
+        print(request.user)
+        print("**"*100)
+        serializer.save(author=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 

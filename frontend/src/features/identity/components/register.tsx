@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigation, useSubmit } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {httpService} from "../../../core/http-service"
+import { useNavigate } from "react-router-dom";
+
 
 type FormData = {
     username: string;
@@ -12,10 +14,12 @@ type FormData = {
 
 const Register = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
+    const navigate = useNavigate()
     
     const onSubmit = (data: FormData) => {
         const {confirmPassword, ...userData} = data
         submitForm(userData, {method: 'post'})
+        navigate('/login')
     };
 
     const submitForm = useSubmit()

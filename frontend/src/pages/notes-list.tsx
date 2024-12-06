@@ -46,7 +46,7 @@ export function NotesList({ columns, data, notes }: DataTableProps) {
   };
 
   const deleteNote = (note: Note) => {
-    console.log("Delete Note:", note);
+    
   };
 
   return (
