@@ -116,17 +116,21 @@ def add_note(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-@api_view(['POST'])
+@api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])  # اطمینان از این که کاربر لاگین شده باشد
 def delete_note(request):
-    serializer = NoteSerializer(data=request.data)
-    if serializer.is_valid():
+    note_id = request.query_params.get('id')
+    print(note_id)
+    print("-----"*100)
+    if not note_id:
+        return Response({"error": "Note ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+    try:
         print(request.user)
         print("**"*100)
-        serializer.save(author=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
+        note = Note.objects.get(id=note_id, author=request.user)
+    except Note.DoesNotExist:
+        return Response({"error": "Exception on delete"}, status=status.HTTP_404_NOT_FOUND)
+    note.delete()
+    return Response({"message": "Note deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
 

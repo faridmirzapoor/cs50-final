@@ -13,7 +13,8 @@ urlpatterns = [
     path('register/', s_views.register),
     path('test-token/', s_views.test_token),
     path('note-detail/<int:pk>/', views.note_detail),
-    path('add-note/', views.add_note, name='add-note')
+    path('add-note/', views.add_note, name='add-note'),
+    path('delete-note/', views.delete_note, name='delete-note')
 
 ]
 
