@@ -19,7 +19,6 @@ def get_user_from_token(auth_token):
     tokenxxxx = Token.objects.get(key=auth_token)
     return tokenxxxx.user
 
-# Create your views here.
 @api_view(['GET', 'POST'])
 def note_list(request, format=None):
     
@@ -105,7 +104,7 @@ def note_detail(request, pk):
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])  # اطمینان از این که کاربر لاگین شده باشد
+@permission_classes([IsAuthenticated])  
 def add_note(request):
     serializer = NoteSerializer(data=request.data)
     if serializer.is_valid():
@@ -118,7 +117,7 @@ def add_note(request):
 
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])  # اطمینان از این که کاربر لاگین شده باشد
+@permission_classes([IsAuthenticated]) 
 def delete_note(request):
     note_id = request.query_params.get('id')
     print(note_id)

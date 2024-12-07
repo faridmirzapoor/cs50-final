@@ -28,11 +28,9 @@ def login(request):
     if user is None:
         return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)
 
-    # Generate or retrieve token
     token, created = Token.objects.get_or_create(user=user)
     print(token)
     print("---")
-    # Serialize user data
     serializer = UserSerializer(instance=user)
     
     return Response({"token": token.key, "user": serializer.data}, status=status.HTTP_200_OK)

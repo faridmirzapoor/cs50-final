@@ -3,7 +3,7 @@ import Login, { loginAction } from "./features/identity/components/login";
 import Register, { registerAction } from "./features/identity/components/register";
 import IdentityLayout from "./layouts/identity-layout";
 import MainLayout from "./layouts/main-layout";
-import NoteDetail from "./pages/note-detail"; // وارد کردن کامپوننت NoteDetail
+import NoteDetail from "./pages/note-detail";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/notes/:id", // افزودن مسیر برای جزئیات نوت
-    element: <NoteDetail />, // کامپوننت مربوط به نمایش جزئیات نوت
+    path: "/notes/:id", 
+    element: <NoteDetail />, 
   },
 ]);
 

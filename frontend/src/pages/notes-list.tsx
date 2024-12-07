@@ -17,14 +17,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// تعریف مدل Note
 interface Note {
   id: number;
   subject: string;
   description: string;
 }
 
-// تعریف تایپ DataTableProps
 interface DataTableProps {
   data: Note[];
 }
@@ -34,17 +32,14 @@ export function NotesList({ data }: DataTableProps) {
   const [error, setError] = useState<string | null>(null);
   const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
 
-  // باز کردن جزئیات نوت
   const openNoteDetails = (note: Note) => {
     console.log("View Note Details:", note);
   };
 
-  // ویرایش نوت
   const editNote = (note: Note) => {
     console.log("Edit Note:", note);
   };
 
-  // حذف نوت
   const deleteNote = async (note: Note) => {
     setSelectedNoteId(note.id);
     const token = localStorage.getItem("token");
@@ -65,7 +60,6 @@ export function NotesList({ data }: DataTableProps) {
         throw new Error("Failed to delete note");
       }
 
-      // حذف نوت از حالت محلی
       setNotes((prevNotes) => prevNotes.filter((n) => n.id !== note.id));
       setError(null);
     } catch (err) {
@@ -75,7 +69,6 @@ export function NotesList({ data }: DataTableProps) {
     }
   };
 
-  // تعریف ستون‌ها
   const columns: ColumnDef<Note>[] = [
     {
       accessorKey: "id",
